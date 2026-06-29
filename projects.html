@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semua Proyek | ProjectLab Muhammad Hafiz Fassya</title>
+  <meta name="description" content="Kumpulan proyek Muhammad Hafiz Fassya dalam bidang Rekayasa Data, Pembelajaran Mesin, Kecerdasan Buatan, Pengembangan Web, Mobile, Dashboard, dan Penelitian.">
+  <meta name="keywords" content="Muhammad Hafiz Fassya, ProjectLab, portfolio project, data engineering, machine learning, artificial intelligence, web development, project case study, mahasiswa informatika">
+  <meta name="author" content="Muhammad Hafiz Fassya">
+  
+  <meta property="og:title" content="Semua Proyek | ProjectLab Muhammad Hafiz Fassya">
+  <meta property="og:description" content="Jelajahi berbagai proyek Muhammad Hafiz Fassya berdasarkan kategori, teknologi, dan studi kasus.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/images/og-projectlab.png">
+
+  <link rel="icon" type="image/png" href="assets/images/icons/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="ProjectLab Home">
+        <span class="brand-mark" aria-hidden="true">PL</span>
+        <span class="brand-text">ProjectLab</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
+        <span class="nav-toggle-icon" aria-hidden="true"></span>
+      </button>
+
+      <nav class="nav" id="navMenu">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <a class="nav-link" href="index.html#how">Process</a>
+        <a class="nav-link" href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-head">
+      <div class="container">
+        <h1 class="page-title">Semua Proyek</h1>
+        <p class="page-subtitle">Jelajahi semua studi kasus, dari prototipe hingga production.</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="filters-wrapper">
+          <input type="search" class="search-bar" id="searchBar" placeholder="Cari proyek berdasarkan nama, kategori, teknologi, atau tahun..." aria-label="Search projects">
+          <div class="filter-buttons" id="filterButtons"></div>
+        </div>
+        
+        <div id="projectCounter" class="project-counter">
+          <!-- Counter generated via JS -->
+        </div>
+      </div>
+
+      <div class="container grid" id="projectsGrid" aria-live="polite"></div>
+
+      <div class="container empty" id="projectsEmpty" hidden>
+        <h3>Project tidak ditemukan.</h3>
+        <p>Coba gunakan kata kunci atau kategori lain.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-title">ProjectLab</div>
+        <p class="footer-text">Website statis untuk case study project.</p>
+      </div>
+      <div class="footer-meta">
+        <div class="footer-row">© <span id="year">2026</span> Muhammad Hafiz Fassya</div>
+        <div class="footer-row">Published with GitHub Pages</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+[
+  {
+    "id": "diamond-analytics-hub",
+    "title": "Diamond Analytics Hub",
+    "category": "Dashboard",
+    "shortDescription": "Dashboard analitik berbasis web untuk membantu pengguna memantau data penjualan berlian, membaca insight, dan memahami tren melalui visualisasi interaktif.",
+    "problem": "Data transaksi penjualan berlian yang masih tersebar dalam beberapa file Excel membuat proses analisis menjadi lambat, tidak konsisten, dan sulit dipantau secara berkala oleh tim manajemen.",
+    "objective": "Membangun sistem analitik end-to-end yang mampu mengolah data transaksi mentah, membersihkannya, dan menampilkannya melalui dashboard interaktif untuk mempercepat proses pengambilan keputusan bisnis.",
+    "targetUser": "Tim manajemen, analis bisnis, dan staf operasional yang membutuhkan visualisasi tren harga dan penjualan berlian secara cepat.",
+    "role": "Data Engineer & Dashboard Developer (Bertanggung jawab merancang skema data, membuat pipeline pembersihan data, dan mengembangkan antarmuka dashboard visual).",
+    "techStack": [
+      "Python",
+      "Pandas",
+      "Streamlit",
+      "Plotly",
+      "SQL"
+    ],
+    "features": [
+      "Dashboard analytics utama untuk menampilkan ringkasan data penjualan harian dan bulanan.",
+      "Filter data dinamis berdasarkan metrik kejernihan (clarity), potongan (cut), dan warna (color) berlian.",
+      "Visualisasi grafik interaktif (bar chart, scatter plot) untuk membantu pengguna membaca tren harga.",
+      "Modul data transformation otomatis untuk membersihkan anomali pada data sebelum dianalisis."
+    ],
+    "systemFlow": [
+      "Raw Data Excel",
+      "Data Cleaning (Pandas)",
+      "Data Aggregation",
+      "Streamlit Dashboard",
+      "Interactive Insight"
+    ],
+    "result": "Project ini menghasilkan dashboard interaktif yang mempercepat waktu pembuatan laporan dari 3 jam menjadi instan, serta memberikan kemudahan eksplorasi data secara visual kepada pengguna non-teknis.",
+    "challenges": [
+      {
+        "problem": "Terdapat banyak missing values dan outlier pada dataset awal harga berlian.",
+        "solution": "Menerapkan teknik imputasi untuk data kosong dan memfilter outlier ekstrem di tahap Data Cleaning sebelum divisualisasikan."
+      }
+    ],
+    "lessonsLearned": "Mempelajari betapa krusialnya tahap Data Cleaning dalam pipeline analitik; data kotor akan langsung merusak insight visual yang dihasilkan.",
+    "futureImprovement": "Mengintegrasikan database relasional (PostgreSQL) agar data dapat diupdate secara real-time melalui form input.",
+    "github": "",
+    "demo": "",
+    "report": "",
+    "images": [
+      "assets/images/projects/placeholder-project.png"
+    ],
+    "status": "Selesai",
+    "year": "2026",
+    "featured": true
+  },
+  {
+    "id": "medcare-insight",
+    "title": "MedCare Insight",
+    "category": "Kecerdasan Buatan",
+    "shortDescription": "Aplikasi berbasis Artificial Intelligence untuk membantu masyarakat melakukan skrining kesehatan awal berdasarkan keluhan gejala harian.",
+    "problem": "Kurangnya akses cepat dan murah ke fasilitas kesehatan dasar membuat masyarakat sering mengabaikan gejala penyakit ringan hingga menjadi kronis.",
+    "objective": "Membangun model AI berbasis Natural Language Processing (NLP) yang mampu mendeteksi potensi penyakit umum dari input teks gejala yang diberikan pengguna.",
+    "targetUser": "Masyarakat umum, penduduk di daerah minim fasilitas kesehatan, dan tenaga medis dasar sebagai alat bantu triage.",
+    "role": "AI Researcher & Backend Engineer (Bertanggung jawab melatih model klasifikasi teks dan membangun API prediksi untuk frontend).",
+    "techStack": [
+      "TensorFlow",
+      "Python",
+      "FastAPI",
+      "React",
+      "Docker"
+    ],
+    "features": [
+      "Input gejala berbasis teks bebas (Natural Language).",
+      "AI Inference engine untuk mengklasifikasikan gejala ke dalam 50 kategori penyakit umum.",
+      "Sistem Confidence Score untuk menampilkan tingkat kepastian prediksi kepada pengguna.",
+      "Rekomendasi tindakan awal dan pencarian klinik terdekat."
+    ],
+    "systemFlow": [
+      "User Input Text",
+      "Text Preprocessing",
+      "TensorFlow Model Inference",
+      "Confidence Score Output",
+      "Medical Recommendation"
+    ],
+    "result": "Sistem berhasil memprediksi 50 penyakit umum dengan tingkat akurasi 87% pada dataset validasi, dan mampu merespons permintaan API dalam waktu kurang dari 200ms.",
+    "challenges": [
+      {
+        "problem": "Dataset gejala medis sangat tidak seimbang (imbalanced), dengan penyakit langka memiliki sangat sedikit sampel.",
+        "solution": "Menerapkan metode oversampling (SMOTE) untuk kelas minoritas dan membatasi scope model hanya pada penyakit umum (common diseases)."
+      }
+    ],
+    "lessonsLearned": "Sangat penting untuk memberikan disclaimer medis yang jelas kepada pengguna, karena AI tidak boleh menggantikan diagnosis dokter profesional (menghindari False Negatives fatal).",
+    "futureImprovement": "Mengintegrasikan model LLM (Large Language Model) untuk percakapan interaktif (chatbot) yang lebih natural dibandingkan input satu arah.",
+    "github": "",
+    "demo": "",
+    "report": "",
+    "images": [
+      "assets/images/projects/placeholder-project.png"
+    ],
+    "status": "Selesai",
+    "year": "2025",
+    "featured": true
+  },
+  {
+    "id": "fraud-detection-mobile-banking",
+    "title": "Fraud Detection Mobile Banking",
+    "category": "Pembelajaran Mesin",
+    "shortDescription": "Sistem deteksi penipuan transaksi perbankan menggunakan model algoritma Machine Learning berbasis deteksi anomali.",
+    "problem": "Rules-based fraud system konvensional yang digunakan bank sering kali gagal mendeteksi pola penipuan baru dan menghasilkan terlalu banyak alarm palsu (False Positives).",
+    "objective": "Membangun model Machine Learning yang mampu mendeteksi anomali pola transaksi perbankan secara real-time tanpa mengganggu kenyamanan nasabah asli.",
+    "targetUser": "Tim Keamanan Cyber Bank, Analis Fraud, dan Sistem Core Banking.",
+    "role": "Machine Learning Engineer (Bertanggung jawab melakukan feature engineering dari data mentah transaksi dan melatih model XGBoost).",
+    "techStack": [
+      "Python",
+      "XGBoost",
+      "Scikit-Learn",
+      "Apache Kafka",
+      "Redis"
+    ],
+    "features": [
+      "Streaming data ingestion untuk memproses transaksi real-time.",
+      "Feature engineering kompleks yang menghitung frekuensi transaksi nasabah dalam 1 jam terakhir.",
+      "Model inference menggunakan XGBoost untuk menghitung probabilitas fraud (0-100%).",
+      "Dashboard monitoring alert untuk analis investigasi."
+    ],
+    "systemFlow": [
+      "Live Transaction Event",
+      "Kafka Stream",
+      "Feature Extraction",
+      "XGBoost Prediction",
+      "Fraud Alert Dashboard"
+    ],
+    "result": "Model XGBoost mencapai F1-Score 0.92 pada data testing, mengurangi False Positives sebesar 30% dibandingkan sistem lama, dan mampu memproses 1000 transaksi per detik.",
+    "challenges": [
+      {
+        "problem": "Waktu latensi (delay) saat mengambil riwayat transaksi nasabah terlalu lambat untuk prediksi real-time.",
+        "solution": "Menggunakan Redis sebagai In-Memory Database untuk menyimpan profil transaksi nasabah (user profile caching) agar feature dapat diakses dalam hitungan milidetik."
+      }
+    ],
+    "lessonsLearned": "Dalam sistem klasifikasi fraud, tradeoff antara Precision dan Recall harus dikalibrasi sesuai selera risiko bisnis bank (Business Risk Appetite).",
+    "futureImprovement": "Menguji arsitektur Graph Neural Networks (GNN) untuk menangkap relasi dan pola transfer antar rekening dalam sindikat penipuan.",
+    "github": "",
+    "demo": "",
+    "report": "",
+    "images": [
+      "assets/images/projects/placeholder-project.png"
+    ],
+    "status": "Dalam Pengembangan",
+    "year": "2026",
+    "featured": true
+  },
+  {
+    "id": "website-desa-srimahi",
+    "title": "Website Desa Srimahi",
+    "category": "Pengembangan Web",
+    "shortDescription": "Platform informasi terpadu dan digitalisasi pelayanan administrasi untuk masyarakat Desa Srimahi.",
+    "problem": "Masyarakat desa sering kesulitan mengakses informasi resmi terkait program desa, dan proses pengajuan surat pengantar masih dilakukan secara manual menggunakan kertas.",
+    "objective": "Membangun website profil desa sekaligus platform digital untuk mempermudah warga mengakses informasi dan mengajukan layanan administrasi secara online.",
+    "targetUser": "Warga Desa Srimahi, Perangkat Desa, dan masyarakat umum yang mencari informasi desa.",
+    "role": "Fullstack Developer (Bertanggung jawab dari perancangan UI/UX, pembuatan antarmuka publik, hingga sistem manajemen admin untuk aparat desa).",
+    "techStack": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "PHP",
+      "MySQL",
+      "Bootstrap"
+    ],
+    "features": [
+      "Portal berita dan pengumuman desa resmi.",
+      "Galeri dokumentasi kegiatan dan program desa.",
+      "Sistem form pengajuan surat pengantar RT/RW secara online bagi warga terdaftar.",
+      "Admin panel CMS bagi perangkat desa untuk memvalidasi pengajuan surat."
+    ],
+    "systemFlow": [
+      "Warga Login",
+      "Isi Form Pengajuan",
+      "Notifikasi ke Admin",
+      "Validasi Admin",
+      "Status Pengajuan Update"
+    ],
+    "result": "Website berhasil diimplementasikan dan memangkas waktu pengurusan surat pengantar desa dari rata-rata 2 hari menjadi 1 hari kerja.",
+    "challenges": [
+      {
+        "problem": "Banyak warga lansia yang kesulitan menggunakan antarmuka website yang terlalu kompleks.",
+        "solution": "Menyederhanakan desain UI dengan ukuran font lebih besar, kontras warna yang tinggi, dan meminimalisir langkah pengisian form."
+      }
+    ],
+    "lessonsLearned": "Teknologi canggih tidak berguna jika tidak ramah pengguna. UX Design yang inklusif sangat penting untuk aplikasi layanan publik.",
+    "futureImprovement": "Menambahkan fitur notifikasi WhatsApp otomatis kepada warga saat surat pengantar mereka selesai divalidasi.",
+    "github": "",
+    "demo": "",
+    "report": "",
+    "images": [
+      "assets/images/projects/placeholder-project.png"
+    ],
+    "status": "Selesai",
+    "year": "2025",
+    "featured": false
+  },
+  {
+    "id": "ai-insights-dashboard",
+    "title": "AI Insights Dashboard",
+    "category": "Dashboard",
+    "shortDescription": "Dashboard visual untuk memantau performa, akurasi, dan pergeseran data (data drift) dari model AI di lingkungan produksi.",
+    "problem": "Tim Data Science kesulitan memonitor degradasi performa model AI yang sudah dideploy karena tidak ada alat visualisasi real-time yang mengukur akurasi secara konsisten.",
+    "objective": "Menciptakan dashboard monitoring terpusat untuk menampilkan metrik kesehatan model ML dan mendeteksi penurunan akurasi (drift) agar model bisa segera dilatih ulang (retrain).",
+    "targetUser": "Data Scientists, Machine Learning Ops (MLOps) Engineers, dan Manajer Produk Data.",
+    "role": "Data Engineer (Membangun arsitektur logging dari model ke database dan memvisualisasikan metrik tersebut di dashboard).",
+    "techStack": [
+      "Python",
+      "Grafana",
+      "Prometheus",
+      "PostgreSQL",
+      "Docker"
+    ],
+    "features": [
+      "Visualisasi metrik model real-time (Accuracy, Precision, Recall).",
+      "Deteksi Data Drift pada distribusi input feature pengguna.",
+      "Alerting system yang terhubung ke email jika performa turun di bawah threshold.",
+      "Historical view untuk membandingkan model versi lama dengan versi baru."
+    ],
+    "systemFlow": [
+      "Model Prediction Logs",
+      "Prometheus Scraper",
+      "Metrics Aggregation",
+      "Grafana Visualization",
+      "Alert Triggering"
+    ],
+    "result": "Dashboard ini memberikan transparansi penuh terhadap performa model, memungkinkan tim merespons degradasi model 40% lebih cepat dibandingkan laporan mingguan manual.",
+    "challenges": [
+      {
+        "problem": "Volume log data prediksi sangat besar dan membebani server database utama.",
+        "solution": "Memisahkan arsitektur logging menggunakan Time-Series Database (Prometheus) yang dikhususkan untuk menangani data berkecepatan tinggi."
+      }
+    ],
+    "lessonsLearned": "Monitoring model AI sama pentingnya dengan pelatihannya; tanpa metrik produksi yang baik, model perlahan akan menjadi tidak akurat dan merugikan bisnis.",
+    "futureImprovement": "Mengembangkan fitur Auto-Retraining trigger, di mana sistem akan otomatis melatih ulang model jika drift melebihi batas tertentu.",
+    "github": "",
+    "demo": "",
+    "report": "",
+    "images": [
+      "assets/images/projects/placeholder-project.png"
+    ],
+    "status": "Selesai",
+    "year": "2024",
+    "featured": false
+  },
+  {
+    "id": "data-warehouse-ecommerce",
+    "title": "Data Warehouse E-Commerce",
+    "category": "Rekayasa Data",
+    "shortDescription": "Perancangan dan implementasi arsitektur Data Warehouse skala menengah untuk mengkonsolidasi data multi-sumber dari sistem e-commerce.",
+    "problem": "Perusahaan e-commerce kecil mengumpulkan data dari sistem inventori, platform transaksi, dan CRM pemasaran secara terpisah, sehingga tidak bisa melakukan analisis silang (cross-functional analysis).",
+    "objective": "Membangun Data Warehouse terpusat (Single Source of Truth) dan merancang proses Extract, Transform, Load (ETL) harian yang stabil.",
+    "targetUser": "Tim Data Analytics, Tim Marketing, dan Eksekutif Bisnis untuk pembuatan laporan (BI Reports).",
+    "role": "Data Engineer (Merancang skema Star Schema dan menulis skrip automasi ETL berbasis cron).",
+    "techStack": [
+      "SQL",
+      "Google BigQuery",
+      "Python",
+      "Airflow",
+      "dbt"
+    ],
+    "features": [
+      "Integrasi 3 sumber data utama: Database Transaksi, Google Analytics, dan Sistem Inventori.",
+      "Automasi pipeline ETL terjadwal harian menggunakan Apache Airflow.",
+      "Perancangan arsitektur tabel Fact dan Dimension (Star Schema).",
+      "Transformasi dan standarisasi data modular menggunakan dbt (data build tool)."
+    ],
+    "systemFlow": [
+      "Data Extraction (API & SQL)",
+      "Load to Staging Area",
+      "Data Build Tool (Transform)",
+      "Data Warehouse (BigQuery)",
+      "BI Reporting Tool"
+    ],
+    "result": "Tim analis data dapat menjalankan query lintas departemen 10x lebih cepat berkat skema data yang terstruktur rapi, tanpa harus meminta bantuan tim IT secara manual.",
+    "challenges": [
+      {
+        "problem": "Terdapat kegagalan proses ETL sesekali karena perubahan struktur API dari platform pihak ketiga.",
+        "solution": "Menambahkan sistem notifikasi Slack pada DAG Airflow dan mengimplementasikan mekanisme pengecekan skema data sebelum proses load dijalankan."
+      }
+    ],
+    "lessonsLearned": "Data Quality Testing sangat krusial di tahap transformasi; memastikan integritas kunci asing (foreign keys) mencegah masalah besar saat pembuatan laporan.",
+    "futureImprovement": "Beralih dari pemrosesan batch harian (daily batch) ke streaming (near real-time) menggunakan arsitektur pub/sub event.",
+    "github": "",
+    "demo": "",
+    "report": "",
+    "images": [
+      "assets/images/projects/placeholder-project.png"
+    ],
+    "status": "Selesai",
+    "year": "2025",
+    "featured": false
+  }
+]

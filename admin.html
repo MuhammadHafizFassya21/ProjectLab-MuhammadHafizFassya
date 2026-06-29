@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel | ProjectLab</title>
+  
+  <link rel="icon" type="image/png" href="assets/images/icons/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .admin-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .admin-table { width: 100%; border-collapse: collapse; margin-bottom: 3rem; }
+    .admin-table th, .admin-table td { border: 1px solid var(--border); padding: 0.75rem; text-align: left; }
+    .admin-table th { background: var(--bg-muted); font-weight: 600; }
+    .admin-form { background: var(--bg-muted); padding: 2rem; border-radius: var(--radius); margin-bottom: 4rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+    .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; }
+    textarea.form-control { min-height: 100px; resize: vertical; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="admin-header">
+      <h2>ProjectLab Admin</h2>
+      <button id="logoutBtn" class="btn btn-ghost">Keluar</button>
+    </div>
+
+    <section>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+        <h3>Daftar Proyek</h3>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Urutan</th>
+              <th>ID / Title</th>
+              <th>Kategori</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="projectsTbody">
+            <tr><td colspan="5" style="text-align: center;">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-form" id="formSection">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 id="formTitle">Tambah Proyek Baru</h3>
+        <button id="cancelEditBtn" class="btn btn-outline" style="display: none;">Batal Edit</button>
+      </div>
+      <div id="addErrorMsg" class="error-msg" style="color:red; margin-bottom:1rem; display:none;"></div>
+      <div id="addSuccessMsg" style="color:green; margin-bottom:1rem; display:none;">Proyek berhasil disimpan!</div>
+      
+      <form id="addProjectForm">
+        <input type="hidden" id="editMode" value="false">
+        
+        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">ID Proyek (Kebab case) *Primary Key</label>
+            <input class="form-control" type="text" id="pId" required placeholder="contoh: aplikasi-baru">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Judul (Title)</label>
+            <input class="form-control" type="text" id="pTitle" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kategori</label>
+            <select class="form-control" id="pCategory" required>
+              <option value="Rekayasa Data">Rekayasa Data</option>
+              <option value="Pembelajaran Mesin">Pembelajaran Mesin</option>
+              <option value="Kecerdasan Buatan">Kecerdasan Buatan</option>
+              <option value="Pengembangan Web">Pengembangan Web</option>
+              <option value="Pengembangan Mobile">Pengembangan Mobile</option>
+              <option value="Penelitian / Akademik">Penelitian / Akademik</option>
+              <option value="Dashboard">Dashboard</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tahun</label>
+            <input class="form-control" type="text" id="pYear" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-control" id="pStatus" required>
+              <option value="Selesai">Selesai</option>
+              <option value="Dalam Pengembangan">Dalam Pengembangan</option>
+              <option value="Prototipe">Prototipe</option>
+              <option value="Penelitian">Penelitian</option>
+              <option value="Proyek Akademik">Proyek Akademik</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Peran (Role)</label>
+            <input class="form-control" type="text" id="pRole" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Urutan Tampil (Display Order)</label>
+            <input class="form-control" type="number" id="pDisplayOrder" value="0" required>
+          </div>
+        </div>
+        
+        <div class="form-group" style="margin-top: 1rem;">
+          <label class="form-label">Deskripsi Singkat</label>
+          <textarea class="form-control" id="pShortDesc" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Latar Belakang Masalah (Problem)</label>
+          <textarea class="form-control" id="pProblem" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tujuan (Objective)</label>
+          <textarea class="form-control" id="pObjective" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Pengguna</label>
+          <input class="form-control" type="text" id="pTargetUser" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Tech Stack (Pisahkan dengan koma)</label>
+          <input class="form-control" type="text" id="pTechStack" placeholder="React, Node.js, dll">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Fitur (Pisahkan dengan koma)</label>
+          <textarea class="form-control" id="pFeatures"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Gambar Screenshot (Upload)</label>
+          <input class="form-control" type="file" id="pImageFile" accept="image/*">
+          <small class="text-muted">Biarkan kosong jika tidak ingin mengubah gambar.</small>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <input type="checkbox" id="pFeatured"> <label for="pFeatured">Jadikan Proyek Unggulan (Featured)</label>
+        </div>
+        
+        <div style="margin-top: 0.5rem;">
+          <input type="checkbox" id="pIsActive" checked> <label for="pIsActive">Aktif (Ditampilkan ke Publik)</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top: 2rem;" id="submitProjectBtn">Simpan Proyek</button>
+      </form>
+    </section>
+  </div>
+  
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
