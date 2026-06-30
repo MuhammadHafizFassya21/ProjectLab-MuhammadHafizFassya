@@ -59,7 +59,7 @@ async function loadFallbackProjects() {
   }
 }
 
-window.loadProjectsData = async function() {
+window.loadProjectsData = async function () {
   if (!window.supabaseClient) {
     console.error("Supabase client is not initialized");
     return loadFallbackProjects();
