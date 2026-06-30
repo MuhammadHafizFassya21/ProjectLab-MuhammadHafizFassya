@@ -11,6 +11,8 @@ window.supabaseClient = supabaseClient;
 function mapSupabaseProject(item) {
   return {
     id: item.slug,
+    dbId: item.id,
+    slug: item.slug,
     title: item.title,
     category: item.category || [],
     shortDescription: item.short_description || "",
@@ -18,53 +20,28 @@ function mapSupabaseProject(item) {
     objective: item.objective || "",
     targetUser: item.target_user || "",
     role: item.role || "",
-    techStack: item.tech_stack || [],
-    features: item.features || [],
-    systemFlow: item.system_flow || [],
+    techStack: typeof item.tech_stack === 'string' ? JSON.parse(item.tech_stack) : (item.tech_stack || []),
+    features: typeof item.features === 'string' ? JSON.parse(item.features) : (item.features || []),
+    systemFlow: typeof item.system_flow === 'string' ? JSON.parse(item.system_flow) : (item.system_flow || []),
     result: item.result || "",
-    challenges: item.challenges || [],
+    challenges: typeof item.challenges === 'string' ? JSON.parse(item.challenges) : (item.challenges || []),
     lessonsLearned: item.lessons_learned || "",
     futureImprovement: item.future_improvement || "",
     github: item.github_url || "",
     demo: item.demo_url || "",
     report: item.report_url || "",
-    images: item.image_url
-      ? [item.image_url]
-      : ["assets/images/projects/placeholder-project.png"],
+    images: Array.isArray(item.image_urls) ? item.image_urls : (typeof item.image_urls === 'string' && item.image_urls.startsWith('[')) ? JSON.parse(item.image_urls) : (item.image_url ? (typeof item.image_url === 'string' && item.image_url.startsWith('[') ? JSON.parse(item.image_url) : [item.image_url]) : ["assets/images/projects/placeholder-project.png"]),
+    imageUrl: (Array.isArray(item.image_urls) && item.image_urls.length > 0) ? item.image_urls[0] : (item.image_url ? (typeof item.image_url === 'string' && item.image_url.startsWith('[') ? JSON.parse(item.image_url)[0] : item.image_url) : ""),
     status: item.status || "Selesai",
     year: item.year || "",
-    featured: item.featured || false
+    featured: item.featured || false,
+    isActive: item.is_active !== false,
+    displayOrder: item.display_order || 0,
+    createdAt: item.created_at || "",
+    updatedAt: item.updated_at || ""
   };
 }
-
-async function loadProjectsData() {
-  try {
-    if (!window.supabaseClient) {
-      throw new Error("Supabase client belum tersedia. Periksa urutan script.");
-    }
-
-    const { data, error } = await window.supabaseClient
-      .from("projects")
-      .select("*")
-      .order("display_order", { ascending: true })
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      throw error;
-    }
-
-    if (data && data.length > 0) {
-      return data.map(mapSupabaseProject);
-    }
-
-    console.warn("Data Supabase kosong. Menggunakan fallback projects.json.");
-    return await loadFallbackProjects();
-  } catch (error) {
-    console.error("Gagal mengambil data dari Supabase:", error);
-    return await loadFallbackProjects();
-  }
-}
-window.loadProjectsData = loadProjectsData;
+window.mapSupabaseProject = mapSupabaseProject;
 
 async function loadFallbackProjects() {
   try {
@@ -81,3 +58,34 @@ async function loadFallbackProjects() {
     return [];
   }
 }
+
+window.loadProjectsData = async function() {
+  if (!window.supabaseClient) {
+    console.error("Supabase client is not initialized");
+    return loadFallbackProjects();
+  }
+
+  try {
+    const { data, error } = await window.supabaseClient
+      .from("projects")
+      .select("*")
+      .eq("is_active", true)
+      .order("display_order", { ascending: true })
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Supabase error:", error.message);
+      return loadFallbackProjects();
+    }
+
+    if (data && data.length > 0) {
+      // Map data according to requirements
+      return data.map(mapSupabaseProject);
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return loadFallbackProjects();
+  }
+};

@@ -4,13 +4,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ProjectLab | Dokumentasi Proyek Muhammad Hafiz Fassya</title>
-  <meta name="description" content="Website dokumentasi proyek Muhammad Hafiz Fassya yang berisi studi kasus proyek Data Engineering, Machine Learning, Kecerdasan Buatan, Pengembangan Web, Mobile, dan Penelitian.">
-  <meta name="keywords" content="Muhammad Hafiz Fassya, ProjectLab, portfolio project, data engineering, machine learning, artificial intelligence, web development, project case study, mahasiswa informatika">
+  <title>ProjectLab Muhammad Hafiz Fassya</title>
+  <meta name="description"
+    content="Jelajahi dokumentasi project yang telah saya kerjakan dalam bentuk studi kasus, mulai dari latar belakang masalah, solusi, teknologi, fitur, hasil, hingga pembelajaran.">
+  <meta name="keywords"
+    content="Muhammad Hafiz Fassya, ProjectLab, portfolio project, data engineering, machine learning, artificial intelligence, web development, project case study, mahasiswa informatika">
   <meta name="author" content="Muhammad Hafiz Fassya">
-  
-  <meta property="og:title" content="ProjectLab | Dokumentasi Proyek Muhammad Hafiz Fassya">
-  <meta property="og:description" content="Kumpulan studi kasus proyek dalam bidang Rekayasa Data, Pembelajaran Mesin, Kecerdasan Buatan, Pengembangan Web, Mobile, Dashboard, dan Penelitian.">
+
+  <meta property="og:title" content="Semua Proyek | ProjectLab Muhammad Hafiz Fassya">
+  <meta property="og:description"
+    content="Jelajahi dokumentasi project yang telah saya kerjakan dalam bentuk studi kasus, mulai dari latar belakang masalah, solusi, teknologi, fitur, hasil, hingga pembelajaran.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/images/og-projectlab.png">
 
@@ -24,11 +27,11 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" id="top">
+  <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="ProjectLab Home">
         <span class="brand-mark" aria-hidden="true">PL</span>
-        <span class="brand-text">ProjectLab</span>
+        <span class="brand-text">ProjectLab Muhammad Hafiz Fassya</span>
       </a>
 
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
@@ -36,123 +39,52 @@
       </button>
 
       <nav class="nav" id="navMenu">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="projects.html">Projects</a>
-        <a class="nav-link" href="index.html#how">Process</a>
-        <a class="nav-link" href="index.html#contact">Contact</a>
+        <a class="nav-link" href="index.html">Beranda</a>
+        <a class="nav-link" href="index.html">Semua Proyek</a>
+        <a class="nav-link" href="#footer">Kontak</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-content">
-          <div class="eyebrow">Case study • Documentation • Impact</div>
-          <h1 class="hero-title">ProjectLab — Muhammad Hafiz Fassya</h1>
-          <p class="hero-subtitle">
-            Website ini menampilkan dokumentasi project berbasis <strong>case study</strong>,
-            membantu recruiter, dosen, dan calon kolaborator memahami masalah, proses, dan hasil yang saya capai.
-          </p>
+    <div class="page-head">
+      <div class="container">
+        <h1 class="page-title">Semua Proyek</h1>
+        <p class="page-subtitle">Jelajahi dokumentasi project yang telah saya kerjakan dalam bentuk studi kasus, mulai
+          dari latar belakang masalah, solusi, teknologi, fitur, hasil, hingga pembelajaran.</p>
+      </div>
+    </div>
 
-          <div class="hero-actions" style="flex-wrap: wrap;">
-            <a class="btn btn-primary" href="projects.html">Lihat Semua Proyek</a>
-            <a class="btn btn-ghost" href="#featured">Lihat Proyek Unggulan</a>
-            <a class="btn btn-outline" href="https://muhammadhafizfassya21.github.io/project-lab/" title="Jelajahi studi kasus lengkap dari proyek yang telah saya kerjakan, mulai dari latar belakang masalah, solusi, teknologi, fitur, hasil, hingga pembelajaran.">Lihat Dokumentasi Proyek Lengkap</a>
+    <section class="section">
+      <div class="container">
+        <div class="filters-wrapper">
+          <div class="search-bar-wrap">
+            <input type="search" class="search-bar" id="searchBar"
+              placeholder="Cari proyek berdasarkan nama, kategori, teknologi, atau tahun..." aria-label="Cari proyek">
+            <button class="search-clear-btn" id="searchClearBtn" aria-label="Hapus pencarian" style="display:none;">×</button>
           </div>
-
-          <div class="hero-stats" aria-label="Project statistics">
-            <div class="stat">
-              <div class="stat-value" data-stat="total">—</div>
-              <div class="stat-label">Total Project</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value" data-stat="featured">—</div>
-              <div class="stat-label">Featured</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value" data-stat="categories">—</div>
-              <div class="stat-label">Kategori</div>
-            </div>
-          </div>
+          <div class="filter-buttons" id="filterButtons"></div>
         </div>
 
-        <div class="hero-card" aria-hidden="true">
-          <div class="hero-card-inner">
-            <div class="hero-card-title">Ringkasan Case Study</div>
-            <ul class="hero-card-list">
-              <li>Problem → Objective → Target User</li>
-              <li>Tech stack & fitur inti</li>
-              <li>System flow & hasil terukur</li>
-              <li>Challenges, lessons learned, dan next step</li>
-            </ul>
-            <div class="hero-badges">
-              <span class="badge">Responsive UI</span>
-              <span class="badge badge-accent">JSON-driven</span>
-              <span class="badge">GitHub Pages</span>
-            </div>
-          </div>
+        <div id="projectCounter" class="project-counter">
+          <!-- Counter generated via JS -->
         </div>
       </div>
-    </section>
 
-    <section class="section" id="featured">
-      <div class="container section-head">
-        <h2 class="section-title">Proyek Unggulan</h2>
-        <p class="section-subtitle">Pilihan proyek yang paling representatif untuk memahami kemampuan dan value yang
-          saya berikan.</p>
-      </div>
+      <div class="container grid" id="projectsGrid" aria-live="polite"></div>
 
-      <div class="container grid" id="featuredGrid" aria-live="polite"></div>
-    </section>
-
-    <section class="section section-muted" id="categories">
-      <div class="container section-head">
-        <h2 class="section-title">Kategori Proyek</h2>
-        <p class="section-subtitle">Filter cepat berdasarkan tema proyek.</p>
-      </div>
-
-      <div class="container categories" id="categoryList"></div>
-    </section>
-
-    <section class="section" id="how">
-      <div class="container section-head">
-        <h2 class="section-title">Cara Saya Membangun Proyek</h2>
-        <p class="section-subtitle">Pendekatan yang konsisten agar setiap proyek punya arah yang jelas dan hasil yang
-          bisa dievaluasi.</p>
-      </div>
-
-      <div class="container how-grid">
-        <article class="how-step">
-          <div class="how-step-num">01</div>
-          <h3 class="how-step-title">Definisikan Problem</h3>
-          <p class="how-step-desc">Mengubah kebutuhan menjadi problem statement yang spesifik.</p>
-        </article>
-        <article class="how-step">
-          <div class="how-step-num">02</div>
-          <h3 class="how-step-title">Susun Objective & Target User</h3>
-          <p class="how-step-desc">Menentukan indikator keberhasilan dan siapa yang paling terbantu.</p>
-        </article>
-        <article class="how-step">
-          <div class="how-step-num">03</div>
-          <h3 class="how-step-title">Bangun System Flow</h3>
-          <p class="how-step-desc">Memetakan proses dari input sampai output, termasuk edge case.</p>
-        </article>
-        <article class="how-step">
-          <div class="how-step-num">04</div>
-          <h3 class="how-step-title">Eksekusi & Evaluasi</h3>
-          <p class="how-step-desc">Implementasi fitur, validasi, lalu dokumentasikan hasilnya.</p>
-        </article>
+      <div class="container empty" id="projectsEmpty" hidden>
+        <h3>Proyek tidak ditemukan.</h3>
+        <p>Coba gunakan kata kunci atau kategori lain.</p>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" id="footer">
     <div class="container footer-inner">
       <div>
-        <div class="footer-title">ProjectLab</div>
-        <p class="footer-text">Website statis untuk case study project. Dibangun dengan HTML, CSS, JavaScript, dan JSON.
-        </p>
+        <div class="footer-title">ProjectLab Muhammad Hafiz Fassya</div>
+        <p class="footer-text">Website statis untuk case study project.</p>
       </div>
       <div class="footer-meta">
         <div class="footer-row">© <span id="year">2026</span> Muhammad Hafiz Fassya</div>

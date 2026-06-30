@@ -2,23 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
   let allProjects = [];
 
   const projectsGrid = document.getElementById('projectsGrid');
-  const searchInput = document.getElementById('searchInput');
+  // Support both id variants used across pages
+  const searchInput = document.getElementById('searchInput') || document.getElementById('searchBar');
   const filterButtonsContainer = document.getElementById('filterButtons');
   const projectCounter = document.getElementById('projectCounter');
   const emptyState = document.getElementById('projectsEmpty');
 
   const categories = [
-    "All Projects",
-    "Data Engineering",
-    "Machine Learning",
-    "Artificial Intelligence",
-    "Web Development",
-    "Mobile Development",
-    "Research / Academic",
+    "Semua",
+    "Rekayasa Data",
+    "Pembelajaran Mesin",
+    "Kecerdasan Buatan",
+    "Pengembangan Web",
+    "Pengembangan Mobile",
+    "Penelitian / Akademik",
     "Dashboard"
   ];
 
-  let currentCategory = "All Projects";
+  let currentCategory = "Semua";
   let currentSearch = "";
 
 
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filtered = allProjects.filter(project => {
       // Filter by category
-      if (currentCategory !== "All Projects" && project.category !== currentCategory) {
+      if (currentCategory !== "Semua" && project.category !== currentCategory) {
         return false;
       }
 
@@ -79,6 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update counter
     if (projectCounter) {
       projectCounter.textContent = `Menampilkan ${projectsToRender.length} dari ${allProjects.length} proyek`;
+    }
+
+    // Sync clear button visibility
+    if (searchInput) {
+      const clearBtn = document.getElementById('searchClearBtn');
+      if (clearBtn) clearBtn.style.display = currentSearch ? 'flex' : 'none';
     }
 
     if (projectsToRender.length === 0) {
@@ -187,6 +194,28 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', (e) => {
       currentSearch = e.target.value;
       filterAndRenderProjects();
+    });
+    // Support keyboard clear (Escape)
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        currentSearch = '';
+        filterAndRenderProjects();
+        searchInput.blur();
+      }
+    });
+  }
+
+  // Wire clear button if present
+  const clearBtn = document.getElementById('searchClearBtn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (searchInput) {
+        searchInput.value = '';
+        currentSearch = '';
+        filterAndRenderProjects();
+        searchInput.focus();
+      }
     });
   }
 

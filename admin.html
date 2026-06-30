@@ -20,27 +20,63 @@
     .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
     .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; }
     textarea.form-control { min-height: 100px; resize: vertical; }
+    .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--bg-card); padding: 1.5rem; border-radius: var(--radius); box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border: 1px solid var(--border); }
+    .stat-card h4 { margin: 0; font-size: 1rem; color: var(--text-muted); }
+    .stat-card .num { font-size: 2rem; font-weight: 700; color: var(--primary); margin-top: 0.5rem; }
+
+    .admin-search-bar { position: relative; margin-bottom: 1.25rem; }
+    .admin-search-bar input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 0.95rem; background: var(--bg-card); color: var(--text); transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box; }
+    .admin-search-bar input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 99 102 241), 0.1); }
+    .admin-search-bar .search-icon { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; font-size: 1rem; }
+    .admin-search-results-count { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+    
+    .admin-image-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+    .admin-image-preview { position: relative; width: 120px; height: 90px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .admin-image-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .admin-image-preview button { position: absolute; top: 4px; right: 4px; background: rgba(239, 68, 68, 0.9); color: white; border: none; border-radius: 4px; padding: 0.2rem 0.4rem; cursor: pointer; font-size: 0.7rem; }
+    .admin-image-preview button:hover { background: #dc2626; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <div class="container">
     <div class="admin-header">
-      <h2>ProjectLab Admin</h2>
+      <div>
+        <h2 style="margin:0;">Admin Panel ProjectLab</h2>
+        <p style="margin:0.5rem 0 0; color:var(--text-muted)">Kelola project yang tampil di website.</p>
+      </div>
       <button id="logoutBtn" class="btn btn-ghost">Keluar</button>
     </div>
 
+    <!-- Ringkasan Statistik -->
     <section>
-      <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-        <h3>Daftar Proyek</h3>
+      <div class="stat-cards">
+        <div class="stat-card"><h4>Total Project</h4><div class="num" id="statTotal">-</div></div>
+        <div class="stat-card"><h4>Project Aktif</h4><div class="num" id="statActive">-</div></div>
+        <div class="stat-card"><h4>Project Nonaktif</h4><div class="num" id="statInactive">-</div></div>
+        <div class="stat-card"><h4>Project Unggulan</h4><div class="num" id="statFeatured">-</div></div>
       </div>
+    </section>
+
+    <section style="margin-bottom: 1rem; display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0;">Daftar Proyek</h3>
+      <button id="importJsonBtn" class="btn btn-outline">Import Project Lama dari JSON</button>
+    </section>
+    <div class="admin-search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="adminSearchInput" placeholder="Cari proyek berdasarkan nama, kategori, teknologi, atau tahun..." autocomplete="off">
+    </div>
+    <p class="admin-search-results-count" id="adminSearchCount"></p>
+    
+    <section>
       <div style="overflow-x: auto;">
         <table class="admin-table">
           <thead>
             <tr>
               <th>Urutan</th>
-              <th>ID / Title</th>
-              <th>Kategori</th>
+              <th>Gambar / ID / Title</th>
+              <th>Kategori / Tahun</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
@@ -62,15 +98,16 @@
       
       <form id="addProjectForm">
         <input type="hidden" id="editMode" value="false">
+        <input type="hidden" id="existingImageUrls" value="[]">
         
         <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
-            <label class="form-label">ID Proyek (Kebab case) *Primary Key</label>
-            <input class="form-control" type="text" id="pId" required placeholder="contoh: aplikasi-baru">
+            <label class="form-label">Judul (Title) *wajib</label>
+            <input class="form-control" type="text" id="pTitle" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Judul (Title)</label>
-            <input class="form-control" type="text" id="pTitle" required>
+            <label class="form-label">Slug (Kosongkan untuk otomatis dari judul)</label>
+            <input class="form-control" type="text" id="pId" placeholder="contoh: aplikasi-baru">
           </div>
           <div class="form-group">
             <label class="form-label">Kategori</label>
@@ -85,11 +122,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Tahun</label>
-            <input class="form-control" type="text" id="pYear" required>
+            <label class="form-label">Tahun (Angka) *wajib</label>
+            <input class="form-control" type="number" id="pYear" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Status</label>
+            <label class="form-label">Status (Kondisi Project)</label>
             <select class="form-control" id="pStatus" required>
               <option value="Selesai">Selesai</option>
               <option value="Dalam Pengembangan">Dalam Pengembangan</option>
@@ -103,8 +140,12 @@
             <input class="form-control" type="text" id="pRole" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Urutan Tampil (Display Order)</label>
+            <label class="form-label">Urutan Tampil (Angka) *wajib</label>
             <input class="form-control" type="number" id="pDisplayOrder" value="0" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Target Pengguna</label>
+            <input class="form-control" type="text" id="pTargetUser">
           </div>
         </div>
         
@@ -113,33 +154,73 @@
           <textarea class="form-control" id="pShortDesc" required></textarea>
         </div>
         
-        <div class="form-group">
-          <label class="form-label">Latar Belakang Masalah (Problem)</label>
-          <textarea class="form-control" id="pProblem" required></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Tujuan (Objective)</label>
-          <textarea class="form-control" id="pObjective" required></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Target Pengguna</label>
-          <input class="form-control" type="text" id="pTargetUser" required>
+        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Latar Belakang Masalah</label>
+            <textarea class="form-control" id="pProblem" required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tujuan (Objective)</label>
+            <textarea class="form-control" id="pObjective" required></textarea>
+          </div>
         </div>
         
         <div class="form-group">
-          <label class="form-label">Tech Stack (Pisahkan dengan koma)</label>
-          <input class="form-control" type="text" id="pTechStack" placeholder="React, Node.js, dll">
+          <label class="form-label">Tech Stack (Pisahkan koma)</label>
+          <input class="form-control" type="text" id="pTechStack" placeholder="React, Node.js">
         </div>
-        
         <div class="form-group">
-          <label class="form-label">Fitur (Pisahkan dengan koma)</label>
-          <textarea class="form-control" id="pFeatures"></textarea>
+          <label class="form-label">Fitur (Pisahkan koma)</label>
+          <textarea class="form-control" id="pFeatures" placeholder="Fitur A, Fitur B"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Alur Sistem (Pisahkan koma)</label>
+          <textarea class="form-control" id="pSystemFlow" placeholder="User login, Proses data, Output"></textarea>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Tantangan (Format JSON Array, cth: [{"problem":"A","solution":"B"}])</label>
+            <textarea class="form-control" id="pChallenges"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hasil Proyek</label>
+            <textarea class="form-control" id="pResult"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pembelajaran</label>
+            <textarea class="form-control" id="pLessons"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pengembangan Berikutnya</label>
+            <textarea class="form-control" id="pFuture"></textarea>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Link GitHub</label>
+            <input class="form-control" type="text" id="pGithub">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Link Demo</label>
+            <input class="form-control" type="text" id="pDemo">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Link Laporan</label>
+            <input class="form-control" type="text" id="pReport">
+          </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Gambar Screenshot (Upload)</label>
-          <input class="form-control" type="file" id="pImageFile" accept="image/*">
-          <small class="text-muted">Biarkan kosong jika tidak ingin mengubah gambar.</small>
+          <label class="form-label">Gambar Proyek (Bisa pilih lebih dari satu)</label>
+          <input class="form-control" type="file" id="pImageFile" accept="image/*" multiple>
+          <small class="text-muted">Upload beberapa gambar project untuk ditampilkan sebagai slider di halaman detail. Maksimal 5MB per gambar.</small>
+          
+          <div id="existingImagesContainer" style="display: none; margin-top: 1rem;">
+            <label class="form-label">Gambar Tersimpan (Klik hapus untuk menghapus URL dari database)</label>
+            <div class="admin-image-grid" id="existingImagesGrid"></div>
+          </div>
         </div>
 
         <div style="margin-top: 1rem;">
